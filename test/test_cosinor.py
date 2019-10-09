@@ -1,8 +1,8 @@
 from numpy import array,arange
 from math import pi,cos
 import pytest
-#import sys 
-#sys.path.insert(1, '/home/juliusandretti/Desktop/Condor/python/repos/pycosinor/')
+import sys 
+sys.path.insert(1, '/home/juliusandretti/Desktop/Condor/python/repos/pycosinor/')
 import cosinor as csnr
 
 Mesor = 100
