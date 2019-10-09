@@ -1,4 +1,4 @@
-from numpy import array,arange
+from numpy import array,arange,ones
 from math import pi,cos
 import pytest
 import sys 
@@ -28,8 +28,13 @@ def test_Acrophase_ini():
     dif = abs(ini.phi - (-Acrophase))
     assert ini.phi == -Acrophase or dif < 1e-10
     
-def test_Zero_Amplitude_Test_ini():   
+def test_Zero_Amplitude_Test_ini_False():   
     assert ini.zeroAmp == False
+
+def test_Zero_Amplitude_Test_ini_True():   
+    tru = csnr.Cosinor(t,Mesor*ones(n),24,0.05)
+    tru.fit()
+    assert tru.zeroAmp == True
     
 a = csnr.Cosinor(array([97,130,167.5,187.5,218,247.5,285,315,337.5])*24/360,[102,96.8,97,92.5,95,93,99.4,99.8,105.5],24,0.05)
 a.fit()

@@ -126,8 +126,7 @@ class Cosinor:
         f = X*(beta**2) + 2*T*beta*gamma + Z*(gamma**2) - 2*(sigma**2)*F_distr
     #    fConservative = 
     #    discriminant = b**2 - 4*a*c       
-        
-        self.zeroAmp = f<=0 # This constant tells us if our confidence region admits beta = gamma = 0 as a solution
+        self.zeroAmp = (f<=0 or abs(f) <= 1e-20) # This constant tells us if our confidence region admits beta = gamma = 0 as a solution
         self.p_3a = scist.f.pdf(abs((X*(beta**2) + 2*T*beta*gamma + Z*(gamma**2))/(2*(sigma**2))),2,n-3) # p-value for the zero amplitude test        
         if ~self.zeroAmp: # If the zero amplitude is rejected we can estimate the joint confidence region    
             dist = 2*sqrt(eigen[0][0]*F_distr*sigma) # This is an estimate of the amplitude of the interval containing statistic significant gamma values
