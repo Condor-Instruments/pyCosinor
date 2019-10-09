@@ -1,9 +1,16 @@
 from numpy import array,arange,ones
 from math import pi,cos
 import pytest
-import sys 
-sys.path.insert(1, '/home/juliusandretti/Desktop/Condor/python/repos/pycosinor/')
+import sys,inspect,os
+#print(inspect.getfile(inspect.currentframe()))
+#print(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))))  
+filepath = inspect.getfile(inspect.currentframe())
+backtodir = '/test/test_cosinor.py'
+sys.path.insert(1, filepath[0:(len(filepath)-len(backtodir))])
+
 import cosinor as csnr
+
+tol = 1e-10
 
 Mesor = 100
 Amplitude = 50
@@ -18,15 +25,15 @@ ini.fit()
 
 def test_Mesor_ini():
     dif = abs(ini.M - Mesor)
-    assert ini.M == Mesor or dif < 1e-10
+    assert ini.M == Mesor or dif < tol
 
 def test_Amp_ini():
     dif = abs(ini.Amp - Amplitude)
-    assert ini.Amp == Amplitude or dif < 1e-10
+    assert ini.Amp == Amplitude or dif < tol
     
 def test_Acrophase_ini():
     dif = abs(ini.phi - (-Acrophase))
-    assert ini.phi == -Acrophase or dif < 1e-10
+    assert ini.phi == -Acrophase or dif < tol
     
 def test_Zero_Amplitude_Test_ini_False():   
     assert ini.zeroAmp == False
@@ -41,23 +48,23 @@ a.fit()
 
 def test_Mesor():
     dif = abs(a.M - 99.7269745887)
-    assert a.M == 99.7269745887 or dif < 1e-10
+    assert a.M == 99.7269745887 or dif < tol
 
 def test_Amp():
     dif = abs(a.Amp - 6.38383296016)
-    assert a.Amp == 6.38383296016 or dif < 1e-10
+    assert a.Amp == 6.38383296016 or dif < tol
     
 def test_Acrophase():
     dif = abs(a.phi - (-0.4754187912802497))
-    assert a.phi == -0.4754187912802497 or dif < 1e-10
+    assert a.phi == -0.4754187912802497 or dif < tol
     
 def test_Gamma():
     dif = abs(a.gamma - 2.92194951534)
-    assert a.gamma == 2.92194951534 or dif < 1e-10
+    assert a.gamma == 2.92194951534 or dif < tol
     
 def test_Beta():
     dif = abs(a.beta - 5.67587299832)
-    assert a.beta == 5.67587299832 or dif < 1e-10
+    assert a.beta == 5.67587299832 or dif < tol
     
 
 def test_Zero_Amplitude_Test():   
@@ -65,6 +72,6 @@ def test_Zero_Amplitude_Test():
     
 def test_Zero_Amplitude_Test_p_value():   
     dif = abs(a.p_3a - 0.000511378765161)
-    assert a.p_3a == 0.000511378765161 or dif < 1e-10
+    assert a.p_3a == 0.000511378765161 or dif < tol
     
 
