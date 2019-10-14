@@ -220,45 +220,48 @@ class Cosinor:
             self.posBeta1 = posBeta1
             self.posBeta2 = posBeta2
     
-def printParam(self):
-    import matplotlib.lines as mlines
-    import matplotlib.pyplot as plt
-    print('---Parameter estimation---') 
-    print('Mesor:',self.M)
-    print('Amplitude:',self.Amp)
-    print('Acrophase:',self.phi,'('+str((-1)*self.phi/self.w)+' hours)') # Considering a period T = 24h
-    print('(Gamma: '+str(self.gamma)+'  Beta: '+str(self.beta)+')\n')
-    
-    print('Cosinor fit x Original data:') 
-    aproxF = array([(self.M + self.Amp*cos(self.w*self.t[i] + self.phi)) for i in range(self.n)]) # aproxF is the "curve" that better fits our points
-    plt.figure()
-    plt.plot(self.t, self.y, 'g', self.t, aproxF, 'b')
-    l1 = mlines.Line2D([], [], color='blue', label='Cosinor')
-    l2 = mlines.Line2D([], [], color='green', label='Original')
-    plt.legend(handles=[l2,l1])
-    plt.xlabel('Time')
-    plt.show()
-
-def printParamCI(self):
-    print('---Confidence Intervals---')  
-    print('Mesor CI:', self.CI_M)
-    print('\nZero Amplitude Test Result:', self.zeroAmp)
-    print('Associated p-value: ', self.p_3a)
-
-    if ~self.zeroAmp:
-        print('\nAmplitude CI:', self.CI_Amp)
-        print('Acrophase CI:', self.CI_phi)
-        print('(Gamma: ['+str(self.intGamma[0])+', '+str(self.intGamma[1])+'])')
-        print('(Beta: ['+str(self.intBeta[0])+', '+str(self.intBeta[1])+'])')
-        print('\nJoint Confidence Region:')
-        confidencePlot(self.Amp,self.beta,self.gamma,self.posGamma,self.posBeta1,self.posBeta2) # Calls a function that prepares a Cosinor plot
-    else:
-        print('Since the Zero Amplitude Test couldnt be rejected, a statistic significant confidence region cant be determined')
+    def printParam(self):
+        import matplotlib.lines as mlines
+        import matplotlib.pyplot as plt
+        print('---Parameter estimation---') 
+        print('Mesor:',self.M)
+        print('Amplitude:',self.Amp)
+        print('Acrophase:',self.phi,'('+str((-1)*self.phi/self.w)+' hours)') # Considering a period T = 24h
+        print('(Gamma: '+str(self.gamma)+'  Beta: '+str(self.beta)+')\n')
         
-#def ini(): # Initial test function
-#    y = [102,96.8,97,92.5,95,93,99.4,99.8,105.5]
-#    t = array([97,130,167.5,187.5,218,247.5,285,315,337.5])*24/360
-#    cosinorFit(t,array(y),24,0.05)
+        print('Cosinor fit x Original data:') 
+        aproxF = array([(self.M + self.Amp*cos(self.w*self.t[i] + self.phi)) for i in range(self.n)]) # aproxF is the "curve" that better fits our points
+        plt.figure()
+        plt.plot(self.t, self.y, 'g', self.t, aproxF, 'b')
+        l1 = mlines.Line2D([], [], color='blue', label='Cosinor')
+        l2 = mlines.Line2D([], [], color='green', label='Original')
+        plt.legend(handles=[l2,l1])
+        plt.xlabel('Time')
+        plt.show()
+    
+    def printParamCI(self):
+        print('---Confidence Intervals---')  
+        print('Mesor CI:', self.CI_M)
+        print('\nZero Amplitude Test Result:', self.zeroAmp)
+        print('Associated p-value: ', self.p_3a)
+    
+        if ~self.zeroAmp:
+            print('\nAmplitude CI:', self.CI_Amp)
+            print('Acrophase CI:', self.CI_phi)
+            print('(Gamma: ['+str(self.intGamma[0])+', '+str(self.intGamma[1])+'])')
+            print('(Beta: ['+str(self.intBeta[0])+', '+str(self.intBeta[1])+'])')
+            print('\nJoint Confidence Region:')
+            confidencePlot(self.Amp,self.beta,self.gamma,self.posGamma,self.posBeta1,self.posBeta2) # Calls a function that prepares a Cosinor plot
+        else:
+            print('Since the Zero Amplitude Test couldnt be rejected, a statistic significant confidence region cant be determined')
+        
+def ini(): # Initial test function
+    y = [102,96.8,97,92.5,95,93,99.4,99.8,105.5]
+    t = array([97,130,167.5,187.5,218,247.5,285,315,337.5])*24/360
+    ini = Cosinor(t,array(y),24,0.05)
+    ini.fit()
+    ini.printParam()
+    ini.printParamCI()
 #    
 #def tester(): # Creates test vectors with a period of 24 hours
 #    Mesor = float(input('Enter the mesor value: '))
@@ -276,4 +279,4 @@ def printParamCI(self):
 #    cosinorFit(t,y,24,0.05)    
     
 #tester()
-#ini 
+ini() 
