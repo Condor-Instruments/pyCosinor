@@ -58,9 +58,9 @@ def acrophaseDet(beta, gamma):
     if a == 1 and b == 1:
         phi = -theta
     elif a == -1 and b == 1:
-        phi = -pi + theta;
+        phi = -pi + theta
     elif a == -1 and b == -1:
-        phi = -pi - theta;
+        phi = -pi - theta
     elif a == 1 and b == -1:
         phi = -2*pi + theta   
     return phi
