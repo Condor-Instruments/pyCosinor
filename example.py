@@ -3,7 +3,8 @@
 # Cosinor fitting example - 24/10/2019
 # Julius Andretti
 
-
+from numpy import array, random, arange
+from math import pi,cos
 import cosinor as cs
 
 # Arbitrary inputs
@@ -13,7 +14,7 @@ T = 24
 alpha = 0.05
 
 # Class instantiation
-ini = Cosinor(t,array(y),T,alpha)
+ini = cs.Cosinor(t,array(y),T,alpha)
 
 # Calculations
 ini.fit()
@@ -26,21 +27,22 @@ ini.printParamCI()
 
 
 def tester(): # Creates test vectors with a period of 24 hours
-	Mesor = float(input('Enter the mesor value: '))
+    Mesor = float(input('Enter the mesor value: '))
     Amplitude = float(input('Enter the amplitude value: '))
     Acrophase = float(input('Enter the acrophase value (hours): '))
     Error = float(input('Enter the error percentage: '))/100
+    # T = int(input('Enter the period:'))
     k = float(input('Enter number of cycles: '))
     n = int(input('Enter the number of points: '))
-   
-    t = arange(n)*((24*k)/n)
+
+    t = arange(n)*((24*60*k)/n)
     w = 2*pi/24
     y = array([(Mesor+Amplitude*cos(w*t[i] - Acrophase*w)) for i in range(n)]) + random.uniform(-Error*Amplitude, Error*Amplitude, n)
 
-    test = Cosinor(t,y,24,0.05)
+    test = cs.Cosinor(t,y,24*60,0.05)
     test.fit()
     test.printParam()
     test.printParamCI()
 
 # To test with user made inputs
-#tester()
+# tester()

@@ -8,7 +8,7 @@
 # and comparing Cosinor parameters 
 
 
-from numpy import array, dot, hypot, linspace, real, delete, arange, zeros, random
+from numpy import array, dot, hypot, linspace, real, delete, arange, zeros
 from numpy import linalg as LA
 from math import pi, cos, sin, atan, sqrt
 from cmath import sqrt as csqrt
@@ -28,7 +28,7 @@ def confidencePlot(Amp,beta,gamma,posGamma,posBeta1,posBeta2): # Plots the joint
     ax_carthesian.plot(linspace(gamma*1.2,(1.167*(2/3))*3.1*gamma,30), linspace(beta*1.2,(1.167*(2/3))*3.1*beta,30), 'r', ls='--', linewidth=2)
     ax_carthesian.plot(linspace(-((1.167*(2/3))*3.1*Amp),((1.167*(2/3))*3.1*Amp),10), zeros(10), ls='--', linewidth=0.5, color='black')
     ax_carthesian.plot(zeros(10), linspace(-((1.167*(2/3))*3.1*Amp),((1.167*(2/3))*3.1*Amp),10), ls='--', linewidth=0.5, color='black')
-    ax_carthesian.grid('off')
+    ax_carthesian.grid(False)
     
     # The clock drawing
     circle1 = plt.Circle((0,0),radius=(1.167*(2/3))*3.1*Amp,ls='-',lw=1.3,fill=False)
@@ -37,14 +37,13 @@ def confidencePlot(Amp,beta,gamma,posGamma,posBeta1,posBeta2): # Plots the joint
     ax_carthesian.add_artist(circle2)     
     ax_polar = fig.add_axes([0.2, 0.2, 0.8, 0.8], polar=True, frameon=False) # Polar axis:
     ax_polar.axis([0, 10, 0, 10])
-    plt.setp(ax_polar.get_yticklabels(), visible=False)
     ax_polar.set_xticks(linspace(0, 2*pi, 24, endpoint=False))
     ax_polar.set_xticklabels([str(i)+':00' for i in range(24)])
     ax_polar.set_theta_offset(pi/2.0) # 0:00 on top 
     ax_polar.set_theta_direction(-1) # Clockwise orientation
-    ax_polar.grid('off')
-
-    plt.draw()
+    ax_polar.grid(False)
+    plt.setp(ax_polar.get_yticklabels(), visible=False)
+    plt.show()
     
 def acrophaseDet(beta, gamma):
     def sgn(k): # 1 if k >= 0, 0 else
@@ -129,7 +128,15 @@ class Cosinor:
     #    fConservative = 
     #    discriminant = b**2 - 4*a*c       
         self.zeroAmp = (f<=0 or abs(f) <= 1e-20) # This constant tells us if our confidence region admits beta = gamma = 0 as a solution
-        self.p_3a = scist.f.pdf(abs((X*(beta**2) + 2*T*beta*gamma + Z*(gamma**2))/(2*(sigma**2))),2,n-3) # p-value for the zero amplitude test        
+        self.p_3a = scist.f.pdf(abs((X*(beta**2) + 2*T*beta*gamma + Z*(gamma**2))/(2*(sigma**2))),2,n-3) # p-value for the zero amplitude test  
+
+        CI_Amp = [Amp,Amp]
+        intGamma = [gamma,gamma]
+        intBeta = [beta,beta]
+        CI_phi = [phi,phi]
+        posGamma = []
+        posBeta1 = []
+        posBeta2 = []      
         if ~self.zeroAmp: # If the zero amplitude is rejected we can estimate the joint confidence region    
             dist = 2*sqrt(eigen[0][0]*F_distr*sigma) # This is an estimate of the amplitude of the interval containing statistic significant gamma values
             posGamma = linspace(gamma-2*dist,gamma+2*dist,4001) # A vector containing possible gamma values
@@ -206,21 +213,21 @@ class Cosinor:
                     if phi1 < CI_phi[0]:
                         CI_phi[0] = phi1
             
-            self.n = n           
-            self.w = w
-            self.beta = beta
-            self.gamma = gamma
-            self.M = M
-            self.Amp = Amp
-            self.phi = phi
-            self.CI_M= CI_M
-            self.CI_phi = CI_phi
-            self.CI_Amp = CI_Amp
-            self.intBeta = intBeta
-            self.intGamma = intGamma
-            self.posGamma = posGamma
-            self.posBeta1 = posBeta1
-            self.posBeta2 = posBeta2
+        self.n = n           
+        self.w = w
+        self.beta = beta
+        self.gamma = gamma
+        self.M = M
+        self.Amp = Amp
+        self.phi = phi
+        self.CI_M= CI_M
+        self.CI_phi = CI_phi
+        self.CI_Amp = CI_Amp
+        self.intBeta = intBeta
+        self.intGamma = intGamma
+        self.posGamma = posGamma
+        self.posBeta1 = posBeta1
+        self.posBeta2 = posBeta2
     
     def printParam(self):
         import matplotlib.lines as mlines
