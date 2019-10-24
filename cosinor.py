@@ -2,6 +2,7 @@
 
 # Cosinor fitting class - 09/10/2019
 # Julius Andretti
+
 # References:
 # [1] BINGHAM, G.; ARGOBAST, B.; CORNÉLISSEN, G; LEE, J.; HALBERG, F.: Inferential statistical methods for estimating 
 # and comparing Cosinor parameters 
@@ -71,6 +72,7 @@ class Cosinor:
         # y is the vector containing the values at time t
         # T is the assumed period of the rhytm
         # alpha is the statistic significance needed
+
         self.t = t
         self.y = y
         self.T = T
@@ -254,29 +256,3 @@ class Cosinor:
             confidencePlot(self.Amp,self.beta,self.gamma,self.posGamma,self.posBeta1,self.posBeta2) # Calls a function that prepares a Cosinor plot
         else:
             print('Since the Zero Amplitude Test couldnt be rejected, a statistic significant confidence region cant be determined')
-        
-def ini(): # Initial test function
-    y = [102,96.8,97,92.5,95,93,99.4,99.8,105.5]
-    t = array([97,130,167.5,187.5,218,247.5,285,315,337.5])*24/360
-    ini = Cosinor(t,array(y),24,0.05)
-    ini.fit()
-    ini.printParam()
-    ini.printParamCI()
-#    
-#def tester(): # Creates test vectors with a period of 24 hours
-#    Mesor = float(input('Enter the mesor value: '))
-#    Amplitude = float(input('Enter the amplitude value: '))
-#    Acrophase = float(input('Enter the acrophase value (hours): '))
-#    Error = float(input('Enter the error percentage: '))/100
-#    k = float(input('Enter number of cycles: '))
-#    n = int(input('Enter the number of points: '))
-#    
-#    t = arange(n)*((24*k)/n)
-#    w = 2*pi/24
-#    y = array([(Mesor+Amplitude*cos(w*t[i] - Acrophase*w)) for i in range(n)])
-#    y = y + random.uniform(-Error*Amplitude, Error*Amplitude, n)
-#    print('\n\nResults:\n')    
-#    cosinorFit(t,y,24,0.05)    
-    
-#tester()
-ini() 
