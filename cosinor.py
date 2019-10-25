@@ -235,7 +235,7 @@ class Cosinor:
         print('---Parameter estimation---') 
         print('Mesor:',self.M)
         print('Amplitude:',self.Amp)
-        print('Acrophase:',self.phi,'('+str((-1)*self.phi/self.w)+' hours)') # Considering a period T = 24h
+        print('Acrophase:',self.phi,'('+str(((-1)*self.phi/self.w)/(3600))+' hours)') # Considering a period T = 24h
         print('(Gamma: '+str(self.gamma)+'  Beta: '+str(self.beta)+')\n')
         
         if g:
