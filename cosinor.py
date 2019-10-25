@@ -229,7 +229,7 @@ class Cosinor:
         self.posBeta1 = posBeta1
         self.posBeta2 = posBeta2
     
-    def printParam(self):
+    def printParam(self,g=1):
         import matplotlib.lines as mlines
         import matplotlib.pyplot as plt
         print('---Parameter estimation---') 
@@ -238,17 +238,18 @@ class Cosinor:
         print('Acrophase:',self.phi,'('+str((-1)*self.phi/self.w)+' hours)') # Considering a period T = 24h
         print('(Gamma: '+str(self.gamma)+'  Beta: '+str(self.beta)+')\n')
         
-        print('Cosinor fit x Original data:') 
-        aproxF = array([(self.M + self.Amp*cos(self.w*self.t[i] + self.phi)) for i in range(self.n)]) # aproxF is the "curve" that better fits our points
-        plt.figure()
-        plt.plot(self.t, self.y, 'g', self.t, aproxF, 'b')
-        l1 = mlines.Line2D([], [], color='blue', label='Cosinor')
-        l2 = mlines.Line2D([], [], color='green', label='Original')
-        plt.legend(handles=[l2,l1])
-        plt.xlabel('Time')
-        plt.show()
+        if g:
+            print('Cosinor fit x Original data:') 
+            aproxF = array([(self.M + self.Amp*cos(self.w*self.t[i] + self.phi)) for i in range(self.n)]) # aproxF is the "curve" that better fits our points
+            plt.figure()
+            plt.plot(self.t, self.y, 'g', self.t, aproxF, 'b')
+            l1 = mlines.Line2D([], [], color='blue', label='Cosinor')
+            l2 = mlines.Line2D([], [], color='green', label='Original')
+            plt.legend(handles=[l2,l1])
+            plt.xlabel('Time')
+            plt.show()
     
-    def printParamCI(self):
+    def printParamCI(self,g=1):
         print('---Confidence Intervals---')  
         print('Mesor CI:', self.CI_M)
         print('\nZero Amplitude Test Result:', self.zeroAmp)
@@ -259,7 +260,8 @@ class Cosinor:
             print('Acrophase CI:', self.CI_phi)
             print('(Gamma: ['+str(self.intGamma[0])+', '+str(self.intGamma[1])+'])')
             print('(Beta: ['+str(self.intBeta[0])+', '+str(self.intBeta[1])+'])')
-            print('\nJoint Confidence Region:')
-            confidencePlot(self.Amp,self.beta,self.gamma,self.posGamma,self.posBeta1,self.posBeta2) # Calls a function that prepares a Cosinor plot
+            if g:
+                print('\nJoint Confidence Region:')
+                confidencePlot(self.Amp,self.beta,self.gamma,self.posGamma,self.posBeta1,self.posBeta2) # Calls a function that prepares a Cosinor plot
         else:
             print('Since the Zero Amplitude Test couldnt be rejected, a statistic significant confidence region cant be determined')

@@ -14,16 +14,16 @@ T = 24
 alpha = 0.05
 
 # Class instantiation
-ini = cs.Cosinor(t,array(y),T,alpha)
+# ini = cs.Cosinor(t,array(y),T,alpha)
 
-# Calculations
-ini.fit()
+# # Calculations
+# ini.fit()
 
-# Prints the estimated parameters
-ini.printParam()
+# # Prints the estimated parameters
+# ini.printParam()
 
-# Prints the confidence interval for the Mesor and the confidence pĺot for Amplitude and Acrophase (if the Zero Amplitude Test fails)
-ini.printParamCI()
+# # Prints the confidence interval for the Mesor and the confidence pĺot for Amplitude and Acrophase (if the Zero Amplitude Test fails)
+# ini.printParamCI()
 
 
 def tester(): # Creates test vectors with a period of 24 hours
@@ -35,14 +35,14 @@ def tester(): # Creates test vectors with a period of 24 hours
     k = float(input('Enter number of cycles: '))
     n = int(input('Enter the number of points: '))
 
-    t = arange(n)*((24*60*k)/n)
-    w = 2*pi/24
+    t = arange(n)*((24*60*60*k)/n)
+    w = 2*pi/(24*60*60)
     y = array([(Mesor+Amplitude*cos(w*t[i] - Acrophase*w)) for i in range(n)]) + random.uniform(-Error*Amplitude, Error*Amplitude, n)
 
-    test = cs.Cosinor(t,y,24*60,0.05)
+    test = cs.Cosinor(t,y,24*60*60,0.05)
     test.fit()
     test.printParam()
     test.printParamCI()
 
 # To test with user made inputs
-# tester()
+tester()
