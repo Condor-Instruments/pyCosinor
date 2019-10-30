@@ -125,36 +125,16 @@ class LogRead:
         for i in range(len(self.names)):
             print('- '+self.names[i])
     
-    def makeT(self,a=1):
+    def makeT(self):
         time = []
         if len(self.dateTime) > 0:
-            if a:
-                for i in range(0,len(self.dateTime)):
-                    day = int(self.dateTime[i][0:2])
-                    month = int(self.dateTime[i][3:5])
-                    year = int(self.dateTime[i][6:10])
-                    hour = int(self.dateTime[i][11:13])
-                    minute = int(self.dateTime[i][14:16])
-                    second = int(self.dateTime[i][17:19])
-                    stamp = datetime(year,month,day,hour,minute,second,tzinfo=timezone.utc)
-                    time.append([stamp,int(stamp.timestamp())])
-            else:
-                day = int(self.dateTime[0][0:2])
-                month = int(self.dateTime[0][3:5])
-                year = int(self.dateTime[0][6:10])
-                hour = int(self.dateTime[0][11:13])
-                minute = int(self.dateTime[0][14:16])
-                second = int(self.dateTime[0][17:19])
-                time.append([datetime(year,month,day,hour,minute,second,tzinfo=timezone.utc),0])
-                for i in range(1,len(self.dateTime)):
-                    day = int(self.dateTime[i][0:2])
-                    month = int(self.dateTime[i][3:5])
-                    year = int(self.dateTime[i][6:10])
-                    hour = int(self.dateTime[i][11:13])
-                    minute = int(self.dateTime[i][14:16])
-                    second = int(self.dateTime[i][17:19])
-                    stamp = datetime(year,month,day,hour,minute,second,tzinfo=timezone.utc)
-                    delta = stamp - time[0][0]
-                    time.append([stamp,int(delta.total_seconds())])
-
+            for i in range(0,len(self.dateTime)):
+                day = int(self.dateTime[i][0:2])
+                month = int(self.dateTime[i][3:5])
+                year = int(self.dateTime[i][6:10])
+                hour = int(self.dateTime[i][11:13])
+                minute = int(self.dateTime[i][14:16])
+                second = int(self.dateTime[i][17:19])
+                stamp = datetime(year,month,day,hour,minute,second,tzinfo=timezone.utc)
+                time.append([stamp,int(stamp.timestamp())])
         return transpose(array(time))
