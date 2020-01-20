@@ -108,7 +108,9 @@ class Cosinor:
     
         C = LA.inv(S) # The covariance matrix that describes our sample is E = (sigma^2)*C
         std_M = sigma*sqrt(C[0,0]) # The Mesor's standard deviation
-        CI_M = scist.t.interval(1-self.alpha/2,n-3,M,std_M) # Now we can estimate a confidence interval for the Mesor
+        # CI_M = scist.t.interval(1-self.alpha/2,n-3,M,std_M) # Now we can estimate a confidence interval for the Mesor
+        CI_M_Amp = scist.t.ppf(1-self.alpha/2,n-3)*std_M
+        CI_M = [M - CI_M_Amp, M + CI_M_Amp]
         
         covM = C[1:3,1:3]*sigma**2 # This is the covariance matrix for beta and gamma
 #        invCovM = LA.inv(covM) # Its inverse 
