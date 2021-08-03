@@ -27,13 +27,18 @@ alpha = 0.05
 
 
 def tester(): # Creates test vectors with a period of 24 hours
-    Mesor = float(input('Enter the mesor value: '))
-    Amplitude = float(input('Enter the amplitude value: '))
-    Acrophase = float(input('Enter the acrophase value (hours): '))
-    Error = float(input('Enter the error percentage: '))/100
-    # T = int(input('Enter the period:'))
-    k = float(input('Enter number of cycles: '))
-    n = int(input('Enter the number of points: '))
+    Mesor = 10
+    Amplitude = 10
+    Acrophase = 10*60*60
+    Error = 5/100
+    k = 5
+    n = 200
+    # Mesor = float(input('Enter the mesor value: '))
+    # Amplitude = float(input('Enter the amplitude value: '))
+    # Acrophase = float(input('Enter the acrophase value (hours): '))*60*60
+    # Error = float(input('Enter the error percentage: '))/100
+    # k = float(input('Enter number of cycles: '))
+    # n = int(input('Enter the number of points: '))
 
     t = arange(n)*((24*60*60*k)/n)
     w = 2*pi/(24*60*60)

@@ -1,7 +1,21 @@
 # -*- coding: utf-8 -*-
-
 # Cosinor fitting class - 09/10/2019
-# Julius Andretti
+# Developer: Julius Andretti
+
+# Copyright (C) 2021  Condor Instruments Ltda. - EPP
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 2.1 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # References:
 # [1] BINGHAM, G.; ARGOBAST, B.; CORNÉLISSEN, G; LEE, J.; HALBERG, F.: Inferential statistical methods for estimating 
@@ -35,10 +49,10 @@ def confidencePlot(Amp,beta,gamma,posGamma,posBeta1,posBeta2): # Plots the joint
     circle2 = plt.Circle((0,0),radius= 3.1*Amp,ls='-',lw=1.2,fill=False)
     ax_carthesian.add_artist(circle1)
     ax_carthesian.add_artist(circle2)     
-    ax_polar = fig.add_axes([0.2, 0.2, 0.8, 0.8], polar=True, frameon=False) # Polar axis:
+    ax_polar = fig.add_axes([0.27, 0.225, 0.77, 0.735], polar=True, frameon=False) # Polar axis:
     ax_polar.axis([0, 10, 0, 10])
     ax_polar.set_xticks(linspace(0, 2*pi, 24, endpoint=False))
-    ax_polar.set_xticklabels([str(i)+':00' for i in range(24)])
+    ax_polar.set_xticklabels([str(i) for i in range(24)])
     ax_polar.set_theta_offset(pi/2.0) # 0:00 on top 
     ax_polar.set_theta_direction(-1) # Clockwise orientation
     ax_polar.grid(False)
